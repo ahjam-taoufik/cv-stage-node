@@ -3,9 +3,19 @@ const express = require('express');
 const app = express();
 app.use(express.json());
 
-const logger=require('./logger');
+//if client send x-www-form-urlencoded you should be put this line
+app.use(express.urlencoded({extended:true}));
 
+//if you need  allow access to public folder
+app.use(express.static('public'));
+
+
+
+const logger=require('./logger');
 app.use(logger)
+
+
+
 
 
 const courses = [
