@@ -3,6 +3,15 @@ const express = require('express');
 const app = express();
 app.use(express.json());
 
+app.use(function(req,res,next){
+  console.log('you passed by here');
+   
+  next();
+
+})
+
+
+
 const courses = [
   { id: 1, name: 'courses1' },
   { id: 2, name: 'courses2' },
@@ -84,8 +93,6 @@ function ifExist(req,res){
   if (!course) return res.status(404).send('course not found');
    return course;
 }
-
-
 
 //Listen Server
 const port = process.env.PORT || 3000;
