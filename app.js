@@ -1,22 +1,25 @@
 const Joi = require('joi');
+const helmet = require('helmet');
+const morgan = require('morgan');
 const express = require('express');
 const app = express();
+
+//Helmet helps you secure your Express apps by setting various HTTP headers.
+app.use(helmet());
+
+//morgan is a Node.js and Express middleware to log HTTP requests and errors
+app.use(morgan('tiny'));
+
 app.use(express.json());
 
 //if client send x-www-form-urlencoded you should be put this line
-app.use(express.urlencoded({extended:true}));
+app.use(express.urlencoded({ extended: true }));
 
 //if you need  allow access to public folder
 app.use(express.static('public'));
 
-
-
-const logger=require('./logger');
-app.use(logger)
-
-
-
-
+const logger = require('./logger');
+app.use(logger);
 
 const courses = [
   { id: 1, name: 'courses1' },
@@ -35,16 +38,14 @@ app.get('/api/courses', (req, res) => {
 //Method Get course by id
 app.get('/api/courses/:id', (req, res) => {
   //Look if course Exist
-  const course=ifExist(req,res);
-  if (course)res.send(course);
+  const course = ifExist(req, res);
+  if (course) res.send(course);
 });
-
 
 //Method Post add course
 app.post('/api/courses', (req, res) => {
-
-//Validate input data
-validate(req, res)
+  //Validate input data
+  validate(req, res);
   const course = {
     id: courses.length + 1,
     name: req.body.name,
@@ -56,31 +57,27 @@ validate(req, res)
 //Method Put update course
 app.put('/api/courses/:id', (req, res) => {
   //Look if course Exist
-  const course=ifExist(req,res);
+  const course = ifExist(req, res);
   //Validate input data
-  validate(req, res)
+  validate(req, res);
   //Update course
   course.name = req.body.name;
   res.send(course);
 });
 
-
 //Method delete update course
 app.delete('/api/courses/:id', (req, res) => {
   //Look if course Exist
-  const course=ifExist(req,res);
- 
+  const course = ifExist(req, res);
+
   //delete course
   const index = courses.indexOf(course);
-   courses.splice(index, 1);
-   res.send(course);
-
+  courses.splice(index, 1);
+  res.send(course);
 });
 
-
-
 //Validate input data
-function validate(req,res){
+function validate(req, res) {
   const schema = Joi.object({
     name: Joi.string().min(3).required(),
   });
@@ -90,14 +87,13 @@ function validate(req,res){
   }
 }
 
-
- //Look if course Exist
-function ifExist(req,res){
+//Look if course Exist
+function ifExist(req, res) {
   const course = courses.find((c) => {
     return c.id === parseInt(req.params.id);
   });
   if (!course) return res.status(404).send('course not found');
-   return course;
+  return course;
 }
 
 //Listen Server
