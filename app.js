@@ -4,11 +4,30 @@ const morgan = require('morgan');
 const express = require('express');
 const app = express();
 
+
+//************************ */
+//for switch to mode production you need 
+//to input in the console (in windows) : set NODE_ENV=production
+//************************* */
+
+console.log(`NODE_ENV : ${process.env.NODE_ENV}`);
+console.log(`app : ${app.get('env')}`)
+
+
+if(app.get('env')==='development'){
+  //morgan is a Node.js and Express middleware to log HTTP requests and errors
+  app.use(morgan('tiny'));
+  console.log('morgan is enabled . . .');
+}else{
+  
+  console.log('you are in MODE production . . .');
+  console.log('morgan is disabled . . .');
+}
+
+
 //Helmet helps you secure your Express apps by setting various HTTP headers.
 app.use(helmet());
 
-//morgan is a Node.js and Express middleware to log HTTP requests and errors
-app.use(morgan('tiny'));
 
 app.use(express.json());
 
