@@ -1,18 +1,6 @@
-const http = require('http')
+_ = require('underscore')
 
-const server=http.createServer(function(req, res) {
+//exemple (for other functions , consult : https://underscorejs.org/)
+const res1=_.map([1, 2, 3], function(num){ return num * 3; });
 
-   if(req.url==='/'){
-    res.write('salam alikoum');
-    res.end()
-   }
-
-   if(req.url==='/api'){
-    res.write(JSON.stringify({id:1,name:'taoufik'}));
-    res.end()
-   }
-
-})
-
-server.listen(3000)
-console.log('listing . . . . . . . .');
+console.log(res1);
