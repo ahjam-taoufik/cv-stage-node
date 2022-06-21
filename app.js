@@ -1,11 +1,18 @@
+const http = require('http')
 
-import Logger from './Logger.js'
+const server=http.createServer(function(req, res) {
 
-const logger=new Logger()
+   if(req.url==='/'){
+    res.write('salam alikoum');
+    res.end()
+   }
 
-logger.on('event1',function(){
-    console.log('event1 called');
+   if(req.url==='/api'){
+    res.write(JSON.stringify({id:1,name:'taoufik'}));
+    res.end()
+   }
+
 })
 
-logger.log()
-
+server.listen(3000)
+console.log('listing . . . . . . . .');
