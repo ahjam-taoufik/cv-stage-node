@@ -42,14 +42,27 @@ validate(req, res)
 app.put('/api/courses/:id', (req, res) => {
   //Look if course Exist
   const course=ifExist(req,res);
-
   //Validate input data
   validate(req, res)
-
   //Update course
   course.name = req.body.name;
   res.send(course);
 });
+
+
+//Method delete update course
+app.delete('/api/courses/:id', (req, res) => {
+  //Look if course Exist
+  const course=ifExist(req,res);
+ 
+  //delete course
+  const index = courses.indexOf(course);
+   courses.splice(index, 1);
+   res.send(course);
+
+});
+
+
 
 //Validate input data
 function validate(req,res){
@@ -58,8 +71,7 @@ function validate(req,res){
   });
   const { error, value } = schema.validate({ name: req.body.name });
   if (error) {
-    res.status(400).send(error.details[0].message);
-    return;
+    return res.status(400).send(error.details[0].message);
   }
 }
 
@@ -69,7 +81,7 @@ function ifExist(req,res){
   const course = courses.find((c) => {
     return c.id === parseInt(req.params.id);
   });
-  if (!course) res.status(404).send('course not found');
+  if (!course) return res.status(404).send('course not found');
    return course;
 }
 
