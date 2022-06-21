@@ -3,13 +3,9 @@ const express = require('express');
 const app = express();
 app.use(express.json());
 
-app.use(function(req,res,next){
-  console.log('you passed by here');
-   
-  next();
+const logger=require('./logger');
 
-})
-
+app.use(logger)
 
 
 const courses = [
