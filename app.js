@@ -27,22 +27,17 @@ async function createCourse() {
 }
 
 async function getData() {
-  // aq (equal)
-  // ne (not equal)
-  // gt (greater than)
-  // gte (greater than or equal)
-  // lt (less than)
-  // lte (less than or equal)
-  // in
-  // nin (not in)
- 
-  const data= await Course
-          // .find({price:{$gte:10}})
-          .find({price:{$gte:10,$lte:10}})
-          .select({name:1,author:1})
-          .limit(10)
-          .sort({author:1})
-    console.log(data);
+   // or
+   //and
+  const data = await Course
+
+
+    .find()
+    // .or([{author:'taoufik'},{isPublished:false}])
+    .and({author:'taoufik',isPublished:true})
+    .limit(10)
+    .sort({ author: 1 });
+  console.log(data);
 }
 
 getData();
