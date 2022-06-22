@@ -6,27 +6,39 @@ mongoose
   .catch((err) => console.log('Failed to connect', err));
 
 const courseSchema = mongoose.Schema({
-  name: { 
-    type: String, 
+  name: {
+    type: String,
     required: true,
     // match: /patern/
-    maxLength:20,
-    minLength:4
-   },
+    // maxLength: 20,
+    // minLength: 4,
+  },
   author: String,
-  tags: [String],
-  category:{
-    type:String,
-    enum:["Angular","React"]
+
+  tags: {
+    type: Array,
+    validate: {
+      validator: function (v) {
+        return v && v.length > 0;
+      },
+      message: 'the course should be at least one tage',
+    },
+  },
+
+  category: {
+    type: String,
+    enum: ['Angular', 'React'],
   },
   date: { type: Date, default: Date.now },
   isPublished: Boolean,
   price: {
-     type: Number,
-     required: function(){return this.isPublished},
-     min:10,
-     max:100
-    }
+    type: Number,
+    required: function () {
+      return this.isPublished;
+    },
+    min: 10,
+    max: 100,
+  },
 });
 
 const Course = mongoose.model('Course_db', courseSchema);
@@ -35,11 +47,18 @@ async function createCourse() {
   const course = new Course({
     name: 'Learn React',
     author: 'ali',
-    tags: ['angular', 'frontEnd'],
+     tags: ["Angular","React"],
     isPublished: true,
+    price:20
   });
-  const result = await course.save();
-  console.log(result);
+
+  try{
+    const result = await course.save();
+    console.log(result);
+  }catch(err){
+     console.log(err.message);
+  }
+
 }
 
 async function getData() {
@@ -69,4 +88,6 @@ async function deleteCourse(id) {
   console.log(result);
 }
 
-deleteCourse('62b34a0e1dd3d77c38145279');
+
+createCourse() 
+
