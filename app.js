@@ -1,5 +1,4 @@
 const logger = require('./middleware/logger');
-
 const helmet = require('helmet');
 const morgan = require('morgan');
 const express = require('express');
