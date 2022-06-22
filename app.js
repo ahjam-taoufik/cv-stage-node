@@ -13,17 +13,23 @@ const courseSchema = mongoose.Schema({
   isPublished: Boolean,
 });
 
+const Course = mongoose.model('Course_db', courseSchema);
+
 async function createCourse() {
-  const Course = mongoose.model('Course_db', courseSchema);
   const course = new Course({
-    name: 'Learn Angular',
-    author: 'taoufik',
-    tags: ['angular', 'web', 'frontEnd'],
+    name: 'Learn React',
+    author: 'ali',
+    tags: ['angular', 'frontEnd'],
     isPublished: true,
   });
-
   const result = await course.save();
   console.log(result);
 }
 
-createCourse()
+async function getData() {
+  const data= await Course.find()
+    console.log(data);
+}
+
+getData();
+// createCourse()
