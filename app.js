@@ -27,14 +27,17 @@ async function createCourse() {
 }
 
 async function getData() {
-   // or
-   //and
   const data = await Course
 
+    // Starts with ali
+    // .find({author: /^ali/ })
 
-    .find()
-    // .or([{author:'taoufik'},{isPublished:false}])
-    .and({author:'taoufik',isPublished:true})
+    // end with ali
+    // .find({author: /ali$/ })
+
+    // contains  ali (i : without sensitive)
+    //  .find({author: /.*ali.*/i })
+
     .limit(10)
     .sort({ author: 1 });
   console.log(data);
