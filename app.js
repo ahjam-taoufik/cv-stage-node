@@ -27,8 +27,12 @@ async function createCourse() {
 }
 
 async function getData() {
-  // const data= await Course.find({author:'ali'})
-  const data= await Course.find({author:'ali',isPublished:true})
+ 
+  const data= await Course
+          .find()
+          .select({name:1,author:1})
+          .limit(10)
+          .sort({author:1})
     console.log(data);
 }
 
