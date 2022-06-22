@@ -33,12 +33,12 @@ async function getData() {
 }
 
 async function updatecourse(id) {
-  const course = await Course.findById(id);
-  if(!course) return;
-  course.isPublished = false;
-  course.author = 'taoufik2';
-
-  const result = await course.save();
+  const result = await Course.findByIdAndUpdate({_id:id},{
+      $set:{
+        isPublished : true,
+        author : 'taoufik3'
+      }
+  },{new:true});
   console.log(result);
 }
 
