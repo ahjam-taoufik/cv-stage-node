@@ -1,15 +1,15 @@
 console.log('before');
 
-getUser(1,function(user){
+getUser(function(user){
   console.log(user);
 })
-
+ 
 console.log('after');
 
-function getUser(id,callback){
+function getUser(callback){
   setTimeout(() => {
     console.log('call database . . .');
-    callback({id:id,name:'ahmed'});
+    callback({id:1,name:'ahmed'});
   
   }, 2000);
 
