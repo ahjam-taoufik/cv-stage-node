@@ -42,4 +42,13 @@ async function updatecourse(id) {
   console.log(result);
 }
 
-updatecourse('62b34a0e1dd3d77c38145279');
+
+async function deleteCourse(id) {
+  //if course not existe , this method return null
+  const result = await Course.findByIdAndRemove({_id:id})
+   
+  console.log(result);
+}
+
+
+deleteCourse('62b34a0e1dd3d77c38145279');
