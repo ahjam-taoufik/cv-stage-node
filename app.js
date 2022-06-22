@@ -27,12 +27,19 @@ async function createCourse() {
 }
 
 async function getData() {
-  const data = await Course
-        .count()
+  const data = await Course.find();
 
-   
   console.log(data);
-} 
+}
 
-getData();
+async function updatecourse(id) {
+  const course = await Course.findById(id);
+  if(!course) return;
+  course.isPublished = false;
+  course.author = 'taoufik2';
 
+  const result = await course.save();
+  console.log(result);
+}
+
+updatecourse('62b34a0e1dd3d77c38145279');
