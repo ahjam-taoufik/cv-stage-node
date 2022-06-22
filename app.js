@@ -1,5 +1,11 @@
 const mongoose = require('mongoose');
 
+const delay = (n) => {
+  return new Promise(function (resolve) {
+    setTimeout(resolve, n * 1000);
+  });
+};
+
 mongoose
   .connect('mongodb://localhost/playground')
   .then(() => console.log('you are Connected to DB .....'))
@@ -18,8 +24,13 @@ const courseSchema = mongoose.Schema({
   tags: {
     type: Array,
     validate: {
-      validator: function (v) {
-        return v && v.length > 0;
+      // isAsync: true,
+      validator:async function (v) {
+          await delay(3)
+          //this work in async
+          return val = v && v.length > 0;
+  
+       
       },
       message: 'the course should be at least one tage',
     },
@@ -47,18 +58,17 @@ async function createCourse() {
   const course = new Course({
     name: 'Learn React',
     author: 'ali',
-     tags: ["Angular","React"],
+     tags: ["Angula","React"],
     isPublished: true,
-    price:20
+    price: 20,
   });
 
-  try{
+  try {
     const result = await course.save();
     console.log(result);
-  }catch(err){
-     console.log(err.message);
+  } catch (err) {
+    console.log(err.message);
   }
-
 }
 
 async function getData() {
@@ -88,6 +98,4 @@ async function deleteCourse(id) {
   console.log(result);
 }
 
-
-createCourse() 
-
+createCourse();
