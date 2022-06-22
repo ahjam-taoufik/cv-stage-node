@@ -1,16 +1,18 @@
 console.log('before');
 
-const user=getUser()
+const user=getUser(1)
 console.log(user);
 
 console.log('after');
 
 
-function getUser(){
+function getUser(id){
   setTimeout(() => {
     console.log('call database . . .');
-    return {id:1,name:'ahmed'}
+    return {id:id,name:'ahmed'}
   }, 2000);
+
+  return 1
 }
 
 
