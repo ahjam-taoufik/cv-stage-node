@@ -1,20 +1,28 @@
 console.log('before');
 
-getUser(function(user){
-  console.log(user);
-})
+getUser((user) => {
+  getRepositories(user.name,(repos)=>{
+    console.log(repos);
+  })
+});
  
 console.log('after');
 
-function getUser(callback){
+function getUser(callback) {
   setTimeout(() => {
     console.log('call database . . .');
-    callback({id:1,name:'ahmed'});
-  
+    callback({ id: 1, name: 'ahmed' });
   }, 2000);
-
 }
+ 
 
+function getRepositories(username,callback) {
+  setTimeout(()=>{
+    console.log(' repositories for',username);
+     callback(['repo1', 'repo2'])
+  },2002 )
+ 
+}
 
 // const logger = require('./middleware/logger');
 // const helmet = require('helmet');
