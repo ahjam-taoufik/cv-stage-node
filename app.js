@@ -1,47 +1,62 @@
-const logger = require('./middleware/logger');
-const helmet = require('helmet');
-const morgan = require('morgan');
-const express = require('express');
-const app = express();
-const coursesRouter = require('./router/courses');
-const homeRouter = require('./router/home');
+console.log('before');
 
-//************************ */
-//for switch to mode production you need
-//to input in the console (in windows) : set NODE_ENV=production
-//************************* */
+const user=getUser()
+console.log(user);
 
-// console.log(`NODE_ENV : ${process.env.NODE_ENV}`);
-// console.log(`app : ${app.get('env')}`);
+console.log('after');
 
-if (app.get('env') === 'development') {
-  //morgan is a Node.js and Express middleware to log HTTP requests and errors
-  app.use(morgan('tiny'));
-  console.log('morgan is enabled . . .');
-} else {
-  console.log('you are in MODE production . . .');
-  console.log('morgan is disabled . . .');
+
+function getUser(){
+  setTimeout(() => {
+    console.log('call database . . .');
+    return {id:1,name:'ahmed'}
+  }, 2000);
 }
 
-//Helmet helps you secure your Express apps by setting various HTTP headers.
-app.use(helmet());
 
-app.use(express.json());
+// const logger = require('./middleware/logger');
+// const helmet = require('helmet');
+// const morgan = require('morgan');
+// const express = require('express');
+// const app = express();
+// const coursesRouter = require('./router/courses');
+// const homeRouter = require('./router/home');
+// //************************ */
+// //for switch to mode production you need
+// //to input in the console (in windows) : set NODE_ENV=production
+// //************************* */
 
-//if client send x-www-form-urlencoded you should be put this line
-app.use(express.urlencoded({ extended: true }));
+// // console.log(`NODE_ENV : ${process.env.NODE_ENV}`);
+// // console.log(`app : ${app.get('env')}`);
 
-//if you need  allow access to public folder
-app.use(express.static('public'));
+// if (app.get('env') === 'development') {
+//   //morgan is a Node.js and Express middleware to log HTTP requests and errors
+//   app.use(morgan('tiny'));
+//   console.log('morgan is enabled . . .');
+// } else {
+//   console.log('you are in MODE production . . .');
+//   console.log('morgan is disabled . . .');
+// }
 
-app.use(logger);
+// //Helmet helps you secure your Express apps by setting various HTTP headers.
+// app.use(helmet());
 
-//Router Home
-app.use('/', homeRouter);
+// app.use(express.json());
 
-//Router courses
-app.use('/api/courses', coursesRouter);
+// //if client send x-www-form-urlencoded you should be put this line
+// app.use(express.urlencoded({ extended: true }));
 
-//Listen Server
-const port = process.env.PORT || 3000;
-app.listen(port, () => console.log(`listen at port ${port}`));
+// //if you need  allow access to public folder
+// app.use(express.static('public'));
+
+// app.use(logger);
+
+// //Router Home
+// app.use('/', homeRouter);
+
+// //Router courses
+// app.use('/api/courses', coursesRouter);
+
+// //Listen Server
+// const port = process.env.PORT || 3000;
+// app.listen(port, () => console.log(`listen at port ${port}`));
