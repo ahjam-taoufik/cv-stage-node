@@ -28,20 +28,11 @@ async function createCourse() {
 
 async function getData() {
   const data = await Course
+        .count()
 
-    // Starts with ali
-    // .find({author: /^ali/ })
-
-    // end with ali
-    // .find({author: /ali$/ })
-
-    // contains  ali (i : without sensitive)
-    //  .find({author: /.*ali.*/i })
-
-    .limit(10)
-    .sort({ author: 1 });
+   
   console.log(data);
-}
+} 
 
 getData();
-// createCourse()
+
