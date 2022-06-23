@@ -15,6 +15,8 @@ const courseSchema = mongoose.Schema({
   name: {
     type: String,
     required: true,
+    // lowercase: true,
+    // uppercase:true
     // match: /patern/
     // maxLength: 20,
     // minLength: 4,
@@ -53,6 +55,8 @@ const courseSchema = mongoose.Schema({
     },
     min: 10,
     max: 100,
+    set:v=>Math.round(v),//modif value from double to integer  and persist it in DB 
+    get:v=>Math.round(v) // get value from DB and modif it to integer
   },
 });
 
