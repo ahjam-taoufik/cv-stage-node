@@ -1,33 +1,24 @@
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost/playground1')
+mongoose.connect('mongodb://localhost/playground2')
   .then(() => console.log('Connected to MongoDB...'))
   .catch(err => console.error('Could not connect to MongoDB...', err));
 
-const Author = mongoose.model('Author', new mongoose.Schema({
+const authorSchema = new mongoose.Schema({
   name: String,
   bio: String,
   website: String
-}));
+});
+
+const Author = mongoose.model('Author', authorSchema);
 
 const Course = mongoose.model('Course', new mongoose.Schema({
   name: String,
   author:{
-    type:mongoose.Schema.Types.ObjectId,
-    ref:'Author'
+    type:authorSchema,
+    required:true
   }
 }));
-
-async function createAuthor(name, bio, website) { 
-  const author = new Author({
-    name, 
-    bio, 
-    website 
-  });
-
-  const result = await author.save();
-  console.log(result);
-}
 
 async function createCourse(name, author) {
   const course = new Course({
@@ -40,17 +31,8 @@ async function createCourse(name, author) {
 }
 
 async function listCourses() { 
-  const courses = await Course
-    .find()
-    // .select('name author');//select course with  author id
-    // .populate('author'); //select course with author
-    // .populate('author' , 'name'); //select course with name author
-    .populate('author' , 'name -_id'); //select course with name author and exclude id
+  const courses = await Course.find();
   console.log(courses);
 }
 
-// createAuthor('Taoufik', 'My bio', 'My Website');
-// createCourse('Node Course', 'authorId')
-// createCourse('Node Course3', '62b49c8311939ebd5c901523')
-
- listCourses();
+createCourse('Node Course', new Author({ name: 'Taoufik' }));
