@@ -19,14 +19,18 @@ const courseSchema = mongoose.Schema({
     // maxLength: 20,
     // minLength: 4,
   },
-  author: String,
+  author:{
+    type:String,
+    required: true,
+    minLength:4
+  },
 
   tags: {
     type: Array,
     validate: {
       // isAsync: true,
       validator:async function (v) {
-          await delay(3)
+          await delay(0)
           //this work in async
           return val = v && v.length > 0;
   
@@ -60,14 +64,17 @@ async function createCourse() {
     author: 'ali',
      tags: ["Angula","React"],
     isPublished: true,
-    price: 20,
+    price: 9,
   });
 
   try {
     const result = await course.save();
     console.log(result);
   } catch (err) {
-    console.log(err.message);
+    for(error in err.errors){
+      // console.log(error);
+       console.log(err.errors[error].message);
+    }
   }
 }
 
